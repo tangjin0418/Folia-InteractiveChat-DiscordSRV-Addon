@@ -78,6 +78,7 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -376,7 +377,7 @@ public class DiscordContentUtils {
                 int slot = Integer.parseInt(((SelectionMenuInteraction) event.getInteraction()).getValues().get(0));
                 if (slot >= 0 && slot < items.length) {
                     event.deferReply().setEphemeral(true).queue();
-                    Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                    FoliaUtil.scheduler.runTaskAsynchronously(() -> {
                         OfflineICPlayer offlineICPlayer = offlineICPlayerAtomicRef.updateAndGet(p -> p instanceof ICPlayer ? (p.isOnline() ? p : ICPlayerFactory.getOfflineICPlayer(p.getUniqueId())) : p);
                         try {
                             ItemStack item = items[slot];
@@ -474,7 +475,7 @@ public class DiscordContentUtils {
                 return;
             }
             event.deferEdit().queue();
-            Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+            FoliaUtil.scheduler.runTaskAsynchronously(() -> {
                 AtomicInteger currentPage = currentPages.get(user.getId());
                 if (currentPage == null) {
                     currentPages.put(user.getId(), currentPage = new AtomicInteger(0));

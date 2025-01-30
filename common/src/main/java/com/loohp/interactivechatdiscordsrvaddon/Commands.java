@@ -45,6 +45,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -151,7 +152,7 @@ public class Commands implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("interactivechatdiscordsrv.update")) {
                 sender.sendMessage(ChatColor.AQUA + "[ICDiscordSrvAddon] InteractiveChat DiscordSRV Addon written by LOOHP!");
                 sender.sendMessage(ChatColor.GOLD + "[ICDiscordSrvAddon] You are running ICDiscordSRVAddon version: " + InteractiveChatDiscordSrvAddon.plugin.getDescription().getVersion());
-                Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                FoliaUtil.scheduler.runTaskAsynchronously(() -> {
                     UpdaterResponse version = Updater.checkUpdate();
                     if (version.getResult().equals("latest")) {
                         if (version.isDevBuildLatest()) {

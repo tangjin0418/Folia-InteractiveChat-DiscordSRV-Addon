@@ -107,6 +107,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.map.MapCursor;
 import org.bukkit.map.MapPalette;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -909,7 +910,7 @@ public class ImageGeneration {
         } else {
             CompletableFuture<BufferedImage> future = new CompletableFuture<>();
             ItemStack finalItem = item.clone();
-            Bukkit.getScheduler().runTask(InteractiveChatDiscordSrvAddon.plugin, () -> {
+            FoliaUtil.scheduler.runTask(player, () -> {
                 ItemMapWrapper data;
                 try {
                     data = new ItemMapWrapper(finalItem, player);
@@ -917,7 +918,7 @@ public class ImageGeneration {
                     future.completeExceptionally(e);
                     return;
                 }
-                Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                FoliaUtil.scheduler.runTaskAsynchronously(() -> {
                     try {
                         future.complete(getMapImage(data.getColors(), data.getMapCursors(), player));
                     } catch (Throwable e) {
@@ -1698,7 +1699,7 @@ public class ImageGeneration {
     public static Future<List<BufferedImage>> getBookInterface(List<Component> pages) {
         CompletableFuture<List<BufferedImage>> future = new CompletableFuture<>();
         List<Supplier<BufferedImage>> suppliers = getBookInterfaceSuppliers(pages);
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> future.complete(suppliers.stream().map(each -> each.get()).collect(Collectors.toList())));
+        FoliaUtil.scheduler.runTaskAsynchronously(() -> future.complete(suppliers.stream().map(each -> each.get()).collect(Collectors.toList())));
         return future;
     }
 

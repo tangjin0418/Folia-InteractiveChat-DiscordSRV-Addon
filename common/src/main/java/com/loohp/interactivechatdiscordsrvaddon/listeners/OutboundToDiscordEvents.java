@@ -113,6 +113,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -688,7 +689,7 @@ public class OutboundToDiscordEvents implements Listener {
             e.printStackTrace();
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChat.plugin, () -> {
+        FoliaUtil.scheduler.runTaskLaterAsynchronously(() -> {
             Debug.debug("onDeathMessageSend sending item to discord");
             TextChannel destinationChannel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName(event.getChannel());
             if (event.isUsingWebhooks()) {
@@ -973,7 +974,7 @@ public class OutboundToDiscordEvents implements Listener {
             }
             if (InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter > 0) {
                 String finalText = text;
-                Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                FoliaUtil.scheduler.runTaskLaterAsynchronously(() -> {
                     WebhookUtil.editMessage(channel, String.valueOf(messageId), finalText, Collections.emptyList(), Collections.emptyMap(), Collections.emptyList());
                 }, InteractiveChatDiscordSrvAddon.plugin.embedDeleteAfter * 20L);
             }
@@ -1001,7 +1002,7 @@ public class OutboundToDiscordEvents implements Listener {
                 if (!InteractiveChatDiscordSrvAddon.plugin.isEnabled()) {
                     return;
                 }
-                Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+                FoliaUtil.scheduler.runTaskAsynchronously(() -> {
                     if (isWebhookMessage) {
                         handleWebhook(messageId, message, textOriginal, channel);
                     } else {

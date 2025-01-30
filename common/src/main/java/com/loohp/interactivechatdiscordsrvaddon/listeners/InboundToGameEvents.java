@@ -68,6 +68,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -264,7 +265,7 @@ public class InboundToGameEvents implements Listener {
                                 DiscordAttachmentConversionEvent dace = new DiscordAttachmentConversionEvent(url, data);
                                 Bukkit.getPluginManager().callEvent(dace);
                                 DATA.put(data.getUniqueId(), data);
-                                Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
+                                FoliaUtil.scheduler.runTaskLater(() -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
                             }
                         }
                     }
@@ -305,14 +306,14 @@ public class InboundToGameEvents implements Listener {
                             DiscordAttachmentConversionEvent dace = new DiscordAttachmentConversionEvent(url, data);
                             Bukkit.getPluginManager().callEvent(dace);
                             DATA.put(data.getUniqueId(), data);
-                            Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
+                            FoliaUtil.scheduler.runTaskLater(() -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
                         } catch (Exception e) {
                             e.printStackTrace();
                             DiscordAttachmentData data = new DiscordAttachmentData(imageContainer.getName(), url);
                             DiscordAttachmentConversionEvent dace = new DiscordAttachmentConversionEvent(url, data);
                             Bukkit.getPluginManager().callEvent(dace);
                             DATA.put(data.getUniqueId(), data);
-                            Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
+                            FoliaUtil.scheduler.runTaskLater(() -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
                         }
                     }
 
@@ -364,7 +365,7 @@ public class InboundToGameEvents implements Listener {
                                     DiscordAttachmentConversionEvent dace = new DiscordAttachmentConversionEvent(url, data);
                                     Bukkit.getPluginManager().callEvent(dace);
                                     DATA.put(data.getUniqueId(), data);
-                                    Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
+                                    FoliaUtil.scheduler.runTaskLater(() -> DATA.remove(data.getUniqueId()), InteractiveChatDiscordSrvAddon.plugin.discordAttachmentTimeout);
                                 } catch (FileNotFoundException ignore) {
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -430,7 +431,7 @@ public class InboundToGameEvents implements Listener {
     public void onInventory(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> {
+            FoliaUtil.scheduler.runTaskLater(player, () -> {
                 boolean removed = MAP_VIEWERS.remove(player) != null;
 
                 if (removed) {
@@ -457,7 +458,7 @@ public class InboundToGameEvents implements Listener {
         if (removed) {
             if (player.getInventory().equals(event.getClickedInventory()) && slot >= 9) {
                 ItemStack item = player.getInventory().getItem(slot);
-                Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> player.getInventory().setItem(slot, item), 1);
+                FoliaUtil.scheduler.runTaskLater(player, () -> player.getInventory().setItem(slot, item), 1);
             } else {
                 event.setCursor(null);
             }
@@ -492,7 +493,7 @@ public class InboundToGameEvents implements Listener {
         Player player = event.getPlayer();
 
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
-            Bukkit.getScheduler().runTaskLater(InteractiveChatDiscordSrvAddon.plugin, () -> {
+            FoliaUtil.scheduler.runTaskLater(player, () -> {
                 boolean removed = MAP_VIEWERS.remove(player) != null;
 
                 if (removed) {

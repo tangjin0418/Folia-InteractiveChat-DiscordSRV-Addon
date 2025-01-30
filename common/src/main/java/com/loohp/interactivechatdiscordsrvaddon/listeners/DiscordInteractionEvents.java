@@ -32,6 +32,7 @@ import github.scarsz.discordsrv.dependencies.jda.api.events.interaction.GenericC
 import github.scarsz.discordsrv.dependencies.jda.api.events.interaction.SelectionMenuEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -69,7 +70,7 @@ public class DiscordInteractionEvents extends ListenerAdapter {
             }
             REGISTER.put(id, interactionData);
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+        FoliaUtil.scheduler.runTaskLaterAsynchronously(() -> {
             for (String id : interactionIds) {
                 REGISTER.remove(id);
             }

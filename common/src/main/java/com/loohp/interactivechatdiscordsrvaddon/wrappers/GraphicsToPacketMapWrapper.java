@@ -32,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapPalette;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.tjdev.util.tjpluginutil.spigot.scheduler.universalscheduler.UniversalRunnable;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -169,7 +170,7 @@ public class GraphicsToPacketMapWrapper {
         NMS.getInstance().sendFakeMainHandSlot(player, mapItem);
 
         GraphicsToPacketMapWrapper ref = this;
-        new BukkitRunnable() {
+        new UniversalRunnable() {
             int index = 0;
 
             @Override

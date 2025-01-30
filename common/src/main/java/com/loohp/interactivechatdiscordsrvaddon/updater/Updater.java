@@ -36,6 +36,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 public class Updater implements Listener {
 
@@ -99,7 +100,7 @@ public class Updater implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+        FoliaUtil.scheduler.runTaskLaterAsynchronously(() -> {
             if (InteractiveChatDiscordSrvAddon.plugin.updaterEnabled) {
                 Player player = event.getPlayer();
                 if (player.hasPermission("interactivechatdiscordsrv.update")) {

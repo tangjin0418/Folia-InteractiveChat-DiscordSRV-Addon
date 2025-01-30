@@ -109,6 +109,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -222,7 +223,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
             inv.setItem(8, offhand);
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChat.plugin, () -> {
+        FoliaUtil.scheduler.runTaskAsynchronously(() -> {
             ItemStack skull = SkinUtils.getSkull(player.getUniqueId());
             ItemMeta meta = skull.getItemMeta();
             String name = ChatColorUtils.translateAlternateColorCodes('&', InteractiveChatDiscordSrvAddon.plugin.shareInvCommandSkullName.replace("{Player}", player.getName()));
@@ -310,7 +311,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
             }
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChat.plugin, () -> {
+        FoliaUtil.scheduler.runTaskAsynchronously(() -> {
             ItemStack skull = SkinUtils.getSkull(player.getUniqueId());
             ItemMeta meta = skull.getItemMeta();
             String name = ChatColorUtils.translateAlternateColorCodes('&', InteractiveChatDiscordSrvAddon.plugin.shareInvCommandSkullName.replace("{Player}", player.getName()));
@@ -486,7 +487,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
     }
 
     public void init() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> {
+        FoliaUtil.scheduler.runTaskTimerAsynchronously(() -> {
             if (InteractiveChat.bungeecordMode) {
                 if (InteractiveChatDiscordSrvAddon.plugin.playerlistCommandEnabled && InteractiveChatDiscordSrvAddon.plugin.playerlistCommandIsMainServer) {
                     for (ICPlayer player : ICPlayerFactory.getOnlineICPlayers()) {
@@ -515,7 +516,7 @@ public class DiscordCommands implements Listener, SlashCommandProvider {
 
     @EventHandler
     public void onConfigReload(InteractiveChatDiscordSRVConfigReloadEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> reload());
+        FoliaUtil.scheduler.runTaskAsynchronously(() -> reload());
     }
 
     @Override

@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.tjdev.util.tjpluginutil.spigot.FoliaUtil;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class ICPlayerEvents implements Listener {
     private static final ConcurrentCacheHashMap<UUID, Map<String, Object>> CACHED_PROPERTIES = new ConcurrentCacheHashMap<>(300000);
 
     static {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(InteractiveChat.plugin, () -> CACHED_PROPERTIES.cleanUp(), 12000, 12000);
+        FoliaUtil.scheduler.runTaskTimerAsynchronously(() -> CACHED_PROPERTIES.cleanUp(), 12000, 12000);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

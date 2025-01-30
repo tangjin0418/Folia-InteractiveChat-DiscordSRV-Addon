@@ -69,7 +69,7 @@ public class ICPlayerEvents implements Listener {
 
     private void populate(OfflineICPlayer player, boolean scheduleAsync) {
         if (scheduleAsync) {
-            Bukkit.getScheduler().runTaskAsynchronously(InteractiveChatDiscordSrvAddon.plugin, () -> populate(player, false));
+            FoliaUtil.scheduler.runTaskAsynchronously(() -> populate(player, false));
             return;
         }
         Map<String, Object> cachedProperties = CACHED_PROPERTIES.get(player.getUniqueId());
